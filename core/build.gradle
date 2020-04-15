@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api deps.kotlin.kotlin
+    api deps.kotlin.ktx
+    api deps.dagger2.dagger
+    api deps.rx.rxKotlin
+    api deps.rx.rxAndroid
+    api deps.retrofit.retrofit
+    api deps.retrofit.retrofitConverter
+    api deps.retrofit.retrofitRxJava
+    api deps.aac.lifecycleExtensions
+    api deps.aac.lifecycleRuntime
+    api deps.glide.glide
+    api deps.gson
+    api deps.constraint
+    api deps.appcompat
+
+
+    kapt deps.dagger2.daggerCompiler
+    kapt deps.aac.lifecycleCompiler
+    kapt deps.glide.glideCompiler
+
+}

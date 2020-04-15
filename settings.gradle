@@ -1,0 +1,4 @@
+rootProject.name='Fleet Sample'
+include ':sampleapp'
+include ':core'
+include ':navigation'
