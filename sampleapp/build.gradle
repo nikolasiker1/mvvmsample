@@ -30,6 +30,7 @@ dependencies {
     implementation project(':core')
     implementation project(':navigation')
     implementation project(':domain:domain_sampleapp')
+    implementation project(':data:data_sampleapp')
 
     kapt deps.dagger2.daggerCompiler
 }
