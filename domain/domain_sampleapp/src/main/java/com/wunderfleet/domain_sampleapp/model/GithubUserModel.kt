@@ -1,4 +1,4 @@
-package com.wunderfleet.fleetsample.model
+package com.wunderfleet.domain_sampleapp.model
 
 data class GithubUserModel(
     val login: String,

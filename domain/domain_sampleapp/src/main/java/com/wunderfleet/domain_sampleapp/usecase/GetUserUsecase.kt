@@ -3,8 +3,8 @@ package com.wunderfleet.domain_sampleapp.usecase
 import com.wunderfleet.core.domain.usecase.UseCase
 import com.wunderfleet.core.rx.SchedulerProvider
 import com.wunderfleet.core.rx.disposeWith
-import com.wunderfleet.fleetsample.model.GithubUserModel
-import com.wunderfleet.fleetsample.repository.UserRepository
+import com.wunderfleet.domain_sampleapp.model.GithubUserModel
+import com.wunderfleet.domain_sampleapp.repository.UserRepository
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException

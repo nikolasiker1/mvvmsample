@@ -1,6 +1,6 @@
-package com.wunderfleet.fleetsample.repository
+package com.wunderfleet.domain_sampleapp.repository
 
-import com.wunderfleet.fleetsample.model.GithubUserModel
+import com.wunderfleet.domain_sampleapp.model.GithubUserModel
 import io.reactivex.Single
 
 interface UserRepository {

@@ -24,6 +24,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
@@ -34,6 +43,7 @@ dependencies {
     api deps.rx.rxAndroid
     api deps.retrofit.retrofit
     api deps.retrofit.retrofitConverter
+    api deps.retrofit.okHttp3
     api deps.retrofit.retrofitRxJava
     api deps.aac.lifecycleExtensions
     api deps.aac.lifecycleRuntime
@@ -42,9 +52,10 @@ dependencies {
     api deps.constraint
     api deps.appcompat
 
+    implementation 'androidx.fragment:fragment-ktx:1.2.4'
+
 
     kapt deps.dagger2.daggerCompiler
     kapt deps.aac.lifecycleCompiler
     kapt deps.glide.glideCompiler
-
 }

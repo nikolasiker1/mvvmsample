@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">feature_sampleapp</string>
+    <string name="error_text">An error occurred</string>
+</resources>

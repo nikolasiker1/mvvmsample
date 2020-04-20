@@ -1,10 +1,10 @@
-package com.wunderfleet.fleetsample.di.injectors
+package com.wunderfleet.domain_sampleapp.di.injectors
 
 import com.wunderfleet.core.rx.SchedulerProvider
-import com.wunderfleet.fleetsample.di.components.DaggerSampleappDomainComponent
-import com.wunderfleet.fleetsample.di.components.SampleappDomainComponent
+import com.wunderfleet.domain_sampleapp.di.components.DaggerSampleappDomainComponent
+import com.wunderfleet.domain_sampleapp.di.components.SampleappDomainComponent
 import com.wunderfleet.fleetsample.di.modules.SampleappDomainModule
-import com.wunderfleet.fleetsample.repository.UserRepository
+import com.wunderfleet.domain_sampleapp.repository.UserRepository
 import javax.inject.Provider
 
 object SampleappDomainInjector {

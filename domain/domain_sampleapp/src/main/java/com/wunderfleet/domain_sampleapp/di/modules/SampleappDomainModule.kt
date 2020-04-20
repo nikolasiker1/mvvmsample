@@ -1,7 +1,7 @@
 package com.wunderfleet.fleetsample.di.modules
 
 import com.wunderfleet.core.rx.SchedulerProvider
-import com.wunderfleet.fleetsample.repository.UserRepository
+import com.wunderfleet.domain_sampleapp.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Provider

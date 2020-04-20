@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_load_user"
+    app:startDestination="@id/loadingFragment">
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.wunderfleet.feature_sampleapp.ui.UserFragment"
+        android:label="UserFragment">
+        <argument
+            android:name="userModel"
+            app:argType="com.wunderfleet.feature_sampleapp.model.UserModel"
+            app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.wunderfleet.feature_sampleapp.ui.LoadingFragment"
+        android:label="LoadingFragment">
+        <action
+            android:id="@+id/action_loadingFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
+</navigation>

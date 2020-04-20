@@ -1,7 +1,7 @@
-package com.wunderfleet.fleetsample.di.components
+package com.wunderfleet.domain_sampleapp.di.components
 
-import com.wunderfleet.fleetsample.di.modules.SampleappDomainModule
 import com.wunderfleet.domain_sampleapp.usecase.GetUserUsecase
+import com.wunderfleet.fleetsample.di.modules.SampleappDomainModule
 import dagger.Component
 
 

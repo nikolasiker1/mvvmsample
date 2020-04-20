@@ -8,6 +8,7 @@ buildscript {
         rxJava = '2.4.0'
         rxAndroid = '2.1.1'
         retrofit = '2.6.1'
+        retrofitLogging = '4.5.0'
         aac = '2.0.0'
         glide = '4.9.0'
         gson = '2.8.5'
@@ -33,7 +34,8 @@ buildscript {
             retrofit  : [
                     retrofit         : "com.squareup.retrofit2:retrofit:$retrofit",
                     retrofitConverter: "com.squareup.retrofit2:converter-gson:$retrofit",
-                    retrofitRxJava   : "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+                    retrofitRxJava   : "com.squareup.retrofit2:adapter-rxjava2:$retrofit",
+                    okHttp3          : "com.squareup.okhttp3:logging-interceptor:$retrofitLogging"
             ],
             aac       : [
                     lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:$aac",
