@@ -38,6 +38,7 @@ android {
 dependencies {
     api deps.kotlin.kotlin
     api deps.kotlin.ktx
+    api deps.kotlin.fragmentKtx
     api deps.dagger2.dagger
     api deps.rx.rxKotlin
     api deps.rx.rxAndroid
@@ -51,8 +52,9 @@ dependencies {
     api deps.gson
     api deps.constraint
     api deps.appcompat
-
-    implementation 'androidx.fragment:fragment-ktx:1.2.4'
+    api deps.navComponent.navFragment
+    api deps.navComponent.navUi
+    api deps.navComponent.navDynamicFeatures
 
 
     kapt deps.dagger2.daggerCompiler

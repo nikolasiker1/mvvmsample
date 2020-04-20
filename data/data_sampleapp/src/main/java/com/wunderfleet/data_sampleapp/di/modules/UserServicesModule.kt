@@ -2,11 +2,9 @@ package com.wunderfleet.data_sampleapp.di.modules
 
 import com.wunderfleet.data_sampleapp.di.UserDataScope
 import com.wunderfleet.data_sampleapp.remote.UserService
-import com.wunderfleet.network.di.modules.NetworkModule
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
 
 @Module

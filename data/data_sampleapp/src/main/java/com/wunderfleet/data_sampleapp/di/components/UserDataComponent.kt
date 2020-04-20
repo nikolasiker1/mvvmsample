@@ -1,6 +1,5 @@
 package com.wunderfleet.data_sampleapp.di.components
 
-import com.wunderfleet.core.di.components.CoreComponent
 import com.wunderfleet.data_sampleapp.di.UserDataScope
 import com.wunderfleet.data_sampleapp.di.modules.UserDataModule
 import com.wunderfleet.domain_sampleapp.repository.UserRepository

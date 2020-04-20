@@ -1,6 +1,5 @@
 package com.wunderfleet.data_sampleapp.di.injectors
 
-import com.wunderfleet.core.di.injectors.CoreInjector
 import com.wunderfleet.data_sampleapp.di.components.DaggerUserDataComponent
 import com.wunderfleet.data_sampleapp.di.components.UserDataComponent
 import com.wunderfleet.domain_sampleapp.di.injectors.SampleappDomainInjector
