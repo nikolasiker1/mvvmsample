@@ -24,7 +24,7 @@ class GetUserUsecase @Inject constructor(
         userRepository.getUser("nikolasiker1")
             .map<Status> { Status.Success(it) }
             .onErrorReturn(::onError)
-            .subscribeOn(schedulerProvider.newThread)
+            .subscribeOn(schedulerProvider.io)
             .observeOn(schedulerProvider.mainThread)
             .subscribe(onStatus)
             .disposeWith(compositeDisposable)

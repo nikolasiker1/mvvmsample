@@ -1,8 +1,9 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+
 
 
 android {
@@ -10,16 +11,13 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.wunderfleet.fleetsample"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
-        multiDexEnabled true
-
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -33,13 +31,7 @@ android {
 
 dependencies {
     implementation project(':core')
-    implementation project(':network')
-    implementation project(':lib_database')
-    implementation project(':navigation')
     implementation project(':domain:domain_sampleapp')
-    implementation project(':data:data_sampleapp')
-    implementation project(':feature:feature_sampleapp')
 
-    api deps.multidex.multidex
     kapt deps.dagger2.daggerCompiler
 }

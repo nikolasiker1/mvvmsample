@@ -5,11 +5,13 @@ import com.wunderfleet.core.di.injectors.CoreInjector
 import com.wunderfleet.data_sampleapp.di.injectors.UserDataInjector
 import com.wunderfleet.feature_sampleapp.di.injectors.UserInjector
 import com.wunderfleet.network.di.injectors.NetworkInjector
+import di.injectors.RealmInjector
 
 object AppInjector {
     fun initialize(application: Application) {
         initializeCore(application)
         initNetwork()
+        initDatabase()
         initializeUserData()
         initUser()
     }
@@ -28,5 +30,9 @@ object AppInjector {
 
     private fun initNetwork() {
         NetworkInjector.initialize()
+    }
+
+    private fun initDatabase() {
+        RealmInjector.initialize()
     }
 }
