@@ -31,6 +31,8 @@ class GetUserUsecase @Inject constructor(
     }
 
     private fun onError(throwable: Throwable): Status {
+        println(throwable.localizedMessage + "ERROR ITT")
+        throwable.printStackTrace()
         return when (throwable) {
             is SocketTimeoutException -> Status.ConnectionError
             is UnknownHostException -> Status.ConnectionError

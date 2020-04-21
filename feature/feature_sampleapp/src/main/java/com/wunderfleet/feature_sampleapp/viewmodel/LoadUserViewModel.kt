@@ -22,7 +22,9 @@ class LoadUserViewModel @Inject constructor(private val getUserUsecase: GetUserU
     fun getUserData() {
         getUserUsecase.run {
             clear()
-            executeUseCase { handleResult(it) }
+            executeUseCase {
+                handleResult(it)
+            }
         }
     }
 

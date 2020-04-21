@@ -1,14 +1,14 @@
 package di.modules
 
+import com.wunderfleet.core.di.scopes.DataScope
 import dagger.Module
 import dagger.Provides
-import di.RealmScope
 import io.realm.Realm
 
 @Module
 class RealmModule {
 
-    @RealmScope
+    @DataScope
     @Provides
     fun provideRealm(): Realm = Realm.getDefaultInstance()
 

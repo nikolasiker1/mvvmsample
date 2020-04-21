@@ -1,6 +1,6 @@
 package com.wunderfleet.network.di.modules
 
-import com.wunderfleet.network.di.NetworkScope
+import com.wunderfleet.core.di.scopes.DataScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class NetworkModule {
 
     @Provides
-    @NetworkScope
+    @DataScope
     fun getRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.github.com")
@@ -24,7 +24,7 @@ class NetworkModule {
     }
 
     @Provides
-    @NetworkScope
+    @DataScope
     fun getOkHttpCleint(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
@@ -32,7 +32,7 @@ class NetworkModule {
     }
 
     @Provides
-    @NetworkScope
+    @DataScope
     fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

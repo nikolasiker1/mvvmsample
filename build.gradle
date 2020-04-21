@@ -67,7 +67,7 @@ buildscript {
 
                     navDynamicFeatures: "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
             ],
-            multidex: [
+            multidex    : [
                     multidex: "com.android.support:multidex:$multidex"
             ]
 

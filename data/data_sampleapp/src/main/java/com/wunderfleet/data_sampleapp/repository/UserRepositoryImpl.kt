@@ -8,9 +8,19 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val remoteDataSource: UserRemoteDataSource,
+    private val localDataSource: UserLocalDataSource,
     private val schedulerProvider: SchedulerProvider
 ) : UserRepository {
     override fun getUser(username: String): Single<GithubUserModel> {
-        return remoteDataSource.getUser(username).subscribeOn(schedulerProvider.io)
+        return remoteDataSource
+            .getUser(username)
+            .subscribeOn(schedulerProvider.io)
+            .observeOn(schedulerProvider.mainThread)
+            .flatMap {
+                localDataSource.insertUser(it)
+            }
+            .flatMap {
+                localDataSource.getUser(username)
+            }
     }
 }

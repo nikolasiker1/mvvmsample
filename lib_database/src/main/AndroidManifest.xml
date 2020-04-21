@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wunderfleet.lib_database" />
+<manifest package="com.wunderfleet.lib_database" />
