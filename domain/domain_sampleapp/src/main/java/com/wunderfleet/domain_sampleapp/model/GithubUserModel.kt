@@ -2,7 +2,9 @@ package com.wunderfleet.domain_sampleapp.model
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 
+@RealmClass
 open class GithubUserModel(
     var id: Int? = null,
     @PrimaryKey

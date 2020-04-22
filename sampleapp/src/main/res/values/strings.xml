@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Fleet Sample</string>
+    <string name="title_feat_feature_repo_list">Repo List</string>
 </resources>

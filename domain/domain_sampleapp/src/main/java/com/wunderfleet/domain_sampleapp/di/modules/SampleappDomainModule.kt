@@ -1,4 +1,4 @@
-package com.wunderfleet.fleetsample.di.modules
+package com.wunderfleet.domain_sampleapp.di.modules
 
 import com.wunderfleet.core.rx.SchedulerProvider
 import com.wunderfleet.domain_sampleapp.repository.UserRepository

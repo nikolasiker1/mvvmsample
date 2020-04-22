@@ -29,6 +29,7 @@ android {
         }
     }
 
+    dynamicFeatures = []
 }
 
 dependencies {
@@ -39,6 +40,11 @@ dependencies {
     implementation project(':domain:domain_sampleapp')
     implementation project(':data:data_sampleapp')
     implementation project(':feature:feature_sampleapp')
+
+    implementation project(':domain:feat_domain_repo_list')
+    implementation project(':data:feat_data_repo_list')
+    implementation project(':feature:feat_feature_repo_list')
+
 
     api deps.multidex.multidex
     kapt deps.dagger2.daggerCompiler

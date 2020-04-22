@@ -10,6 +10,7 @@ fun Realm.executeAsync(transaction: (Realm) -> Unit): Single<Boolean> {
         executeTransactionAsync(transaction, {
             emitter.onSuccess(true)
         }, {
+            it.printStackTrace()
             emitter.onError(it)
         })
     }

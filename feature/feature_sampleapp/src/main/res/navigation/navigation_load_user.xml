@@ -10,7 +10,7 @@
         android:label="UserFragment">
         <argument
             android:name="userModel"
-            app:argType="com.wunderfleet.feature_sampleapp.model.UserModel"
+            app:argType="com.wunderfleet.feat_feature_repo_list.model.RepoModel[]"
             app:nullable="false" />
     </fragment>
     <fragment
@@ -20,5 +20,7 @@
         <action
             android:id="@+id/action_loadingFragment_to_userFragment"
             app:destination="@id/userFragment" />
+
+        <deepLink app:uri="sampleapp://userFragment" />
     </fragment>
 </navigation>

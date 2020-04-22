@@ -51,8 +51,8 @@ class LoadingFragment : Fragment() {
     private fun userReceived(resource: Resource<UserModel>?) {
         resource.let {
             when (it?.state) {
-                Resource.STATE.LOADING -> onWeatherFetchLoading()
-                Resource.STATE.SUCCESS -> onWeatherFetchSuccess(it)
+                Resource.STATE.LOADING -> onUserFetchLoading()
+                Resource.STATE.SUCCESS -> onUserFetchSuccess(it)
                 else -> onUserFetchError(it)
             }
         }
@@ -68,7 +68,6 @@ class LoadingFragment : Fragment() {
     private fun setUnknownError() {
         viewLoading.visibility = View.GONE
         viewError.apply {
-            //setUnknownError()
             visibility = View.VISIBLE
         }
     }
@@ -76,16 +75,15 @@ class LoadingFragment : Fragment() {
     private fun setConnectionError() {
         viewLoading.visibility = View.GONE
         viewError.apply {
-            //setConnectionError()
             visibility = View.VISIBLE
         }
     }
 
-    private fun onWeatherFetchSuccess(resource: Resource<UserModel>) {
+    private fun onUserFetchSuccess(resource: Resource<UserModel>) {
         resource.data?.let { navigateToUser(it) }
     }
 
-    private fun onWeatherFetchLoading() {
+    private fun onUserFetchLoading() {
         viewLoading.visibility = View.VISIBLE
         viewError.visibility = View.GONE
     }

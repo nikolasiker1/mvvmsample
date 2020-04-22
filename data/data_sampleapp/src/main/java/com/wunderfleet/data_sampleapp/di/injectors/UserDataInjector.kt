@@ -4,6 +4,9 @@ import com.wunderfleet.core.di.injectors.CoreInjector
 import com.wunderfleet.data_sampleapp.di.components.DaggerUserDataComponent
 import com.wunderfleet.data_sampleapp.di.components.UserDataComponent
 import com.wunderfleet.domain_sampleapp.di.injectors.SampleappDomainInjector
+import di.modules.RealmModule
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 
 object UserDataInjector {

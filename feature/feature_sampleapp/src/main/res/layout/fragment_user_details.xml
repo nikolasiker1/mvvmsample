@@ -26,5 +26,11 @@
             tools:text="USERNAME" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/userDetails_viewRepo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="view repos" />
+
 
 </LinearLayout>

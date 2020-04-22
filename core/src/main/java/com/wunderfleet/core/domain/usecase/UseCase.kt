@@ -10,4 +10,5 @@ abstract class UseCase<T> {
     open fun clear() {
         compositeDisposable.clear()
     }
+
 }
