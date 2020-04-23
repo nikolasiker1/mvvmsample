@@ -5,7 +5,8 @@ import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
 import io.reactivex.Single
 import javax.inject.Inject
 
-class ReposRemoteDataSourceImpl @Inject constructor(private val repoService: RepoService): ReposRemoteDataSource {
+class ReposRemoteDataSourceImpl @Inject constructor(private val repoService: RepoService) :
+    ReposRemoteDataSource {
     override fun getRepos(username: String): Single<List<GithubRepoModel>> {
         return repoService.getRepos(username)
     }

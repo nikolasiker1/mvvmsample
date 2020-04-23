@@ -3,7 +3,7 @@ package com.wunderfleet.core.rx
 import io.reactivex.Scheduler
 
 interface SchedulerProvider {
-    val mainThread: Scheduler
-    val io: Scheduler
-    val newThread: Scheduler
+    fun getMainThread(): Scheduler
+    fun getIoThread(): Scheduler
+    fun getNewThread(): Scheduler
 }

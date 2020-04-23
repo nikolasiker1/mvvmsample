@@ -13,7 +13,10 @@ import javax.inject.Inject
 class GetAllReposUsecase @Inject constructor(
     private val githubRepoRepository: GithubRepoRepository,
     private val schedulerProvider: SchedulerProvider
-): UseCase<GetAllReposUsecase.Status>() {
+) : UseCase<GetAllReposUsecase.Status>() {
+
+    var username: String = ""
+
     sealed class Status {
         data class Success(val githubRepoModel: List<GithubRepoModel>) : Status()
         object ConnectionError : Status()
@@ -22,13 +25,13 @@ class GetAllReposUsecase @Inject constructor(
 
     override fun executeUseCase(onStatus: (status: Status) -> Unit) {
         githubRepoRepository
-            .getAllRepos("nikolasiker1")
+            .getAllRepos(username)
             .map<Status> {
                 Status.Success(it)
             }
             .onErrorReturn(::onError)
-            .subscribeOn(schedulerProvider.io)
-            .observeOn(schedulerProvider.mainThread)
+            .subscribeOn(schedulerProvider.getIoThread())
+            .observeOn(schedulerProvider.getMainThread())
             .subscribe(onStatus)
             .disposeWith(compositeDisposable)
     }

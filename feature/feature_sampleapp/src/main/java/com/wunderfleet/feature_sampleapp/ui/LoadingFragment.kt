@@ -45,7 +45,7 @@ class LoadingFragment : Fragment() {
     }
 
     private fun loadUser() {
-        loadUserViewModel.getUserData()
+        loadUserViewModel.getUserData("nikolasiker1")
     }
 
     private fun userReceived(resource: Resource<UserModel>?) {

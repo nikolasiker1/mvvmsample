@@ -5,11 +5,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class DefaultSchedulerProvider : SchedulerProvider {
-    override val mainThread: Scheduler
-        get() = AndroidSchedulers.mainThread()
-    override val io: Scheduler
-        get() = Schedulers.io()
-    override val newThread: Scheduler
-        get() = Schedulers.newThread()
+    override fun getMainThread(): Scheduler {
+        return AndroidSchedulers.mainThread()
+    }
+
+    override fun getIoThread(): Scheduler {
+        return Schedulers.io()
+    }
+
+    override fun getNewThread(): Scheduler {
+        return Schedulers.newThread()
+    }
 
 }

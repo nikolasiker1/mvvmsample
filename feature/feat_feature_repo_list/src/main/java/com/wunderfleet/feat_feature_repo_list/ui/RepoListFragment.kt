@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
 import com.wunderfleet.feat_feature_repo_list.R
-import com.wunderfleet.feat_feature_repo_list.model.RepoModel
 import com.wunderfleet.feat_feature_repo_list.ui.adapter.RepoRecyclerViewAdapter
 import kotlinx.android.synthetic.main.fragment_repo_list.*
 

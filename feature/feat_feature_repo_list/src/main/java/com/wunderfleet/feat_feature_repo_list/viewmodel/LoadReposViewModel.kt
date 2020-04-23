@@ -11,14 +11,16 @@ import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
 import com.wunderfleet.feat_domain_repo_list.usecase.GetAllReposUsecase
 import javax.inject.Inject
 
-class LoadReposViewModel @Inject constructor(private val getAllReposUsecase: GetAllReposUsecase) : ViewModel() {
+class LoadReposViewModel @Inject constructor(private val getAllReposUsecase: GetAllReposUsecase) :
+    ViewModel() {
     private val _getReposLiveData = MutableLiveData<Resource<List<GithubRepoModel>>>()
     val getReposLiveData: LiveData<Resource<List<GithubRepoModel>>>
         get() = _getReposLiveData
 
-    fun getReposLiveData() {
+    fun getReposLiveData(username: String) {
         getAllReposUsecase.run {
             clear()
+            getAllReposUsecase.username = username
             executeUseCase {
                 handleResult(it)
             }

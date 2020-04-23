@@ -94,7 +94,7 @@ class LoadingFragment : Fragment() {
     }
 
     private fun loadRepos() {
-        loadReposViewModel.getReposLiveData()
+        loadReposViewModel.getReposLiveData("nikolasiker1")
     }
 
 }

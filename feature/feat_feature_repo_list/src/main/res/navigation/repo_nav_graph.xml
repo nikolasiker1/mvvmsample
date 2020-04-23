@@ -7,12 +7,12 @@
     <fragment
         android:id="@+id/loadingFragment"
         android:name="com.wunderfleet.feat_feature_repo_list.ui.LoadingFragment"
-        android:label="LoadingFragment" >
+        android:label="LoadingFragment">
         <action
             android:id="@+id/action_loadingFragment_to_repoListFragment"
             app:destination="@id/repoListFragment" />
 
-        <deepLink app:uri="sampleapp://repoFragment"/>
+        <deepLink app:uri="sampleapp://repoFragment" />
     </fragment>
     <fragment
         android:id="@+id/repoListFragment"

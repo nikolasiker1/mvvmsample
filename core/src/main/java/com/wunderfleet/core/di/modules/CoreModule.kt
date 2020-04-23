@@ -11,24 +11,24 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class CoreModule(private val application: Application) {
+open class CoreModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideContext(): Context = application
+    open fun provideContext(): Context = application
 
     @Provides
     @Singleton
-    fun provideApplication(): Application = application
+    open fun provideApplication(): Application = application
 
     @Provides
     @Singleton
-    fun provideGson(): Gson {
+    open fun provideGson(): Gson {
         return GsonBuilder()
             .create()
     }
 
     @Provides
     @Singleton
-    fun provideSchedulerProvider(): SchedulerProvider = DefaultSchedulerProvider()
+    open fun provideSchedulerProvider(): SchedulerProvider = DefaultSchedulerProvider()
 }

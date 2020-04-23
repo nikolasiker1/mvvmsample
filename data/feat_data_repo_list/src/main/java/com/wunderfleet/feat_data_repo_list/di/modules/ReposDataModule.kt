@@ -1,6 +1,5 @@
 package com.wunderfleet.feat_data_repo_list.di.modules
 
-import com.wunderfleet.core.di.scopes.DataScope
 import com.wunderfleet.feat_data_repo_list.db.ReposLocalDataSourceImpl
 import com.wunderfleet.feat_data_repo_list.di.ReposDataScope
 import com.wunderfleet.feat_data_repo_list.remote.RepoService

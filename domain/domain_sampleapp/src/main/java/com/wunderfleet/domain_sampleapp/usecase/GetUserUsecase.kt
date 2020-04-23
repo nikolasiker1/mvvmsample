@@ -10,10 +10,13 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class GetUserUsecase @Inject constructor(
+open class GetUserUsecase @Inject constructor(
     private val userRepository: UserRepository,
     private val schedulerProvider: SchedulerProvider
 ) : UseCase<GetUserUsecase.Status>() {
+
+    var username: String = ""
+
     sealed class Status {
         data class Success(val githubUserModel: GithubUserModel) : Status()
         object ConnectionError : Status()
@@ -21,16 +24,17 @@ class GetUserUsecase @Inject constructor(
     }
 
     override fun executeUseCase(onStatus: (status: Status) -> Unit) {
-        userRepository.getUser("nikolasiker1")
+        userRepository.getUser(username)
             .map<Status> { Status.Success(it) }
             .onErrorReturn(::onError)
-            .subscribeOn(schedulerProvider.io)
-            .observeOn(schedulerProvider.mainThread)
+            .subscribeOn(schedulerProvider.getIoThread())
+            .observeOn(schedulerProvider.getMainThread())
             .subscribe(onStatus)
             .disposeWith(compositeDisposable)
     }
 
-    private fun onError(throwable: Throwable): Status {
+
+    open fun onError(throwable: Throwable): Status {
         throwable.printStackTrace()
         return when (throwable) {
             is SocketTimeoutException -> Status.ConnectionError

@@ -14,8 +14,8 @@ class UserRepositoryImpl @Inject constructor(
     override fun getUser(username: String): Single<GithubUserModel> {
         return remoteDataSource
             .getUser(username)
-            .subscribeOn(schedulerProvider.io)
-            .observeOn(schedulerProvider.mainThread)
+            .subscribeOn(schedulerProvider.getIoThread())
+            .observeOn(schedulerProvider.getMainThread())
             .flatMap {
                 localDataSource.insertUser(it)
             }

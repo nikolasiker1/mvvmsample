@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
 import com.wunderfleet.feat_feature_repo_list.R
-import com.wunderfleet.feat_feature_repo_list.model.RepoModel
 
 class RepoRecyclerViewAdapter(private val repos: List<GithubRepoModel>) :
     RecyclerView.Adapter<RepoRecyclerViewAdapter.RepoViewHolder>() {

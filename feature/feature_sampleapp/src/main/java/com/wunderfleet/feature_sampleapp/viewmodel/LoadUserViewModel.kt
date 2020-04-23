@@ -11,7 +11,7 @@ import com.wunderfleet.feature_sampleapp.model.UserModel
 import com.wunderfleet.feature_sampleapp.model.mapToView
 import javax.inject.Inject
 
-class LoadUserViewModel @Inject constructor(private val getUserUsecase: GetUserUsecase) :
+open class LoadUserViewModel @Inject constructor(private val getUserUsecase: GetUserUsecase) :
     ViewModel() {
 
     private val _getUserLiveData = MutableLiveData<Resource<UserModel>>()
@@ -19,7 +19,8 @@ class LoadUserViewModel @Inject constructor(private val getUserUsecase: GetUserU
         get() = _getUserLiveData
 
 
-    fun getUserData() {
+    fun getUserData(username: String) {
+        getUserUsecase.username = username
         getUserUsecase.run {
             clear()
             executeUseCase {
