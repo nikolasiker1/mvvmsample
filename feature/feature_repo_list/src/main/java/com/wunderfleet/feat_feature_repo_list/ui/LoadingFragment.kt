@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.wunderfleet.core.domain.resource.Resource
+import com.wunderfleet.core.extensions.provideViewModel
 import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
 import com.wunderfleet.feat_feature_repo_list.R
 import com.wunderfleet.feat_feature_repo_list.di.injectors.RepoFeatureInjector
@@ -22,8 +24,8 @@ import kotlinx.android.synthetic.main.fragment_loading.*
  */
 class LoadingFragment : Fragment() {
 
-
-    private val loadReposViewModel by viewModels<LoadReposViewModel> {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val loadReposViewModel by provideViewModel<LoadReposViewModel> {
         RepoFeatureInjector.component.getReposViewModelFactory()
     }
 

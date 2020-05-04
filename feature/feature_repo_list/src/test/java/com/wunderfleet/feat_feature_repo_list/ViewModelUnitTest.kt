@@ -1,4 +1,4 @@
-package com.wunderfleet.feature_sampleapp
+package com.wunderfleet.feat_feature_repo_list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.doReturn
@@ -6,10 +6,10 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import com.wunderfleet.core.domain.resource.Resource
 import com.wunderfleet.core.rx.SchedulerProvider
-import com.wunderfleet.domain_sampleapp.model.GithubUserModel
-import com.wunderfleet.domain_sampleapp.repository.UserRepository
-import com.wunderfleet.domain_sampleapp.usecase.GetUserUsecase
-import com.wunderfleet.feature_sampleapp.viewmodel.LoadUserViewModel
+import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
+import com.wunderfleet.feat_domain_repo_list.repository.GithubRepoRepository
+import com.wunderfleet.feat_domain_repo_list.usecase.GetAllReposUsecase
+import com.wunderfleet.feat_feature_repo_list.viewmodel.LoadReposViewModel
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -25,16 +25,15 @@ import org.mockito.MockitoAnnotations
 import java.net.SocketTimeoutException
 import java.util.concurrent.Callable
 
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class ViewModelUnitTest {
 
     @Mock
-    lateinit var userRepository: UserRepository
+    lateinit var repoRepository: GithubRepoRepository
 
     @Mock
     lateinit var schedulerProvider: SchedulerProvider
@@ -43,11 +42,11 @@ class ExampleUnitTest {
     @JvmField
     val rule = InstantTaskExecutorRule()
 
-    private lateinit var getUsersUsecase: GetUserUsecase
+    private lateinit var getAllReposUsecase: GetAllReposUsecase
 
-    lateinit var loadUserViewModel: LoadUserViewModel
+    lateinit var loadReposViewModel: LoadReposViewModel
 
-    private val githubUserModel: GithubUserModel = GithubUserModel()
+    private val githubRrepoModel: GithubRepoModel = GithubRepoModel()
 
 
     @Before
@@ -55,48 +54,49 @@ class ExampleUnitTest {
         MockitoAnnotations.initMocks(this)
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { h: Callable<Scheduler?>? -> Schedulers.trampoline() }
         RxJavaPlugins.setIoSchedulerHandler { h: Scheduler? -> Schedulers.trampoline() }
-        githubUserModel.name = "Nikola"
-        doReturn(Single.just(githubUserModel)).`when`(userRepository).getUser("nikolasiker1")
+        githubRrepoModel.name = "test"
+        doReturn(Single.just(mutableListOf(githubRrepoModel))).`when`(repoRepository)
+            .getAllRepos("nikolasiker1")
         doReturn(Single.error<SocketTimeoutException>(SocketTimeoutException())).`when`(
-            userRepository
-        ).getUser("error")
+            repoRepository
+        ).getAllRepos("error")
         whenever(schedulerProvider.getIoThread()).thenReturn(Schedulers.trampoline())
         whenever(schedulerProvider.getMainThread()).thenReturn(Schedulers.trampoline())
-        getUsersUsecase = GetUserUsecase(userRepository, schedulerProvider)
-        loadUserViewModel = LoadUserViewModel(getUsersUsecase)
+        getAllReposUsecase = GetAllReposUsecase(repoRepository, schedulerProvider)
+        loadReposViewModel = LoadReposViewModel(getAllReposUsecase)
     }
 
     @Test
     fun `null checks`() {
-        assertNotNull(githubUserModel)
-        assertNotNull(userRepository)
+        assertNotNull(githubRrepoModel)
+        assertNotNull(repoRepository)
         assertNotNull(schedulerProvider)
-        assertNotNull(getUsersUsecase)
-        assertNotNull(loadUserViewModel)
+        assertNotNull(getAllReposUsecase)
+        assertNotNull(loadReposViewModel)
     }
 
     @Test
     fun `succes usercase result`() {
-        loadUserViewModel.getUserData("nikolasiker1")
+        loadReposViewModel.getReposLiveData("nikolasiker1")
 
 
-        verify(userRepository).getUser("nikolasiker1")
-        assertEquals(getUsersUsecase.username, "nikolasiker1")
+        verify(repoRepository).getAllRepos("nikolasiker1")
+        assertEquals(getAllReposUsecase.username, "nikolasiker1")
         assertEquals(
-            loadUserViewModel.getUserLiveData.value?.data?.name, githubUserModel.name
+            loadReposViewModel.getReposLiveData.value?.data?.get(0)?.name, githubRrepoModel.name
         )
         assertEquals(
-            loadUserViewModel.getUserLiveData.value?.state, Resource.STATE.SUCCESS
+            loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.SUCCESS
         )
     }
 
     @Test
     fun `error usercase result`() {
-        loadUserViewModel.getUserData("error")
+        loadReposViewModel.getReposLiveData("error")
 
 
-        verify(userRepository).getUser("error")
-        assertEquals(loadUserViewModel.getUserLiveData.value?.state, Resource.STATE.ERROR)
-        assertEquals(loadUserViewModel.getUserLiveData.value?.message, "connection_error")
+        verify(repoRepository).getAllRepos("error")
+        assertEquals(loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.ERROR)
+        assertEquals(loadReposViewModel.getReposLiveData.value?.message, "connection_error")
     }
 }

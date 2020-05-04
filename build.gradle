@@ -59,7 +59,7 @@ buildscript {
             constraint  : "androidx.constraintlayout:constraintlayout:$constraint",
 
             test        : [
-                    junit   : 'junit:junit:4.12',
+                    junit   : 'junit:junit:4.13',
                     junitExt: 'androidx.test.ext:junit:1.1.1',
                     espresso: 'androidx.test.espresso:espresso-core:3.2.0',
                     mockk   : "io.mockk:mockk:$mockk"

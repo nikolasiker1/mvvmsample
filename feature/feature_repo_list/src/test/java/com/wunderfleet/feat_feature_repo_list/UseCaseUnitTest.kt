@@ -1,10 +1,7 @@
 package com.wunderfleet.feat_feature_repo_list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
-import com.wunderfleet.core.domain.resource.Resource
+import com.nhaarman.mockito_kotlin.*
 import com.wunderfleet.core.rx.SchedulerProvider
 import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
 import com.wunderfleet.feat_domain_repo_list.repository.GithubRepoRepository
@@ -15,8 +12,6 @@ import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,12 +20,7 @@ import org.mockito.MockitoAnnotations
 import java.net.SocketTimeoutException
 import java.util.concurrent.Callable
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class UseCaseUnitTest {
     @Mock
     lateinit var repoRepository: GithubRepoRepository
 
@@ -43,9 +33,9 @@ class ExampleUnitTest {
 
     private lateinit var getAllReposUsecase: GetAllReposUsecase
 
-    lateinit var loadReposViewModel: LoadReposViewModel
-
     private val githubRrepoModel: GithubRepoModel = GithubRepoModel()
+
+
 
 
     @Before
@@ -61,41 +51,24 @@ class ExampleUnitTest {
         ).getAllRepos("error")
         whenever(schedulerProvider.getIoThread()).thenReturn(Schedulers.trampoline())
         whenever(schedulerProvider.getMainThread()).thenReturn(Schedulers.trampoline())
-        getAllReposUsecase = GetAllReposUsecase(repoRepository, schedulerProvider)
-        loadReposViewModel = LoadReposViewModel(getAllReposUsecase)
+        getAllReposUsecase = spy(GetAllReposUsecase(repoRepository, schedulerProvider))
     }
 
     @Test
-    fun `null checks`() {
-        assertNotNull(githubRrepoModel)
-        assertNotNull(repoRepository)
-        assertNotNull(schedulerProvider)
-        assertNotNull(getAllReposUsecase)
-        assertNotNull(loadReposViewModel)
+    fun `isUseCaseExecutedOnSuccess`() {
+        getAllReposUsecase.username = "nikolasiker1"
+        getAllReposUsecase.executeUseCase {
+            verify(getAllReposUsecase).executeUseCase(any())
+            verify(getAllReposUsecase, times(1)).executeUseCase(any())
+        }
     }
 
     @Test
-    fun `succes usercase result`() {
-        loadReposViewModel.getReposLiveData("nikolasiker1")
-
-
-        verify(repoRepository).getAllRepos("nikolasiker1")
-        assertEquals(getAllReposUsecase.username, "nikolasiker1")
-        assertEquals(
-            loadReposViewModel.getReposLiveData.value?.data?.get(0)?.name, githubRrepoModel.name
-        )
-        assertEquals(
-            loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.SUCCESS
-        )
-    }
-
-    @Test
-    fun `error usercase result`() {
-        loadReposViewModel.getReposLiveData("error")
-
-
-        verify(repoRepository).getAllRepos("error")
-        assertEquals(loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.ERROR)
-        assertEquals(loadReposViewModel.getReposLiveData.value?.message, "connection_error")
+    fun `isUseCaseExecutedOnError`() {
+        getAllReposUsecase.username = "error"
+        getAllReposUsecase.executeUseCase {
+            verify(getAllReposUsecase).executeUseCase(any())
+            verify(getAllReposUsecase, times(1)).executeUseCase(any())
+        }
     }
 }

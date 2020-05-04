@@ -10,7 +10,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class GetAllReposUsecase @Inject constructor(
+open class GetAllReposUsecase @Inject constructor(
     private val githubRepoRepository: GithubRepoRepository,
     private val schedulerProvider: SchedulerProvider
 ) : UseCase<GetAllReposUsecase.Status>() {

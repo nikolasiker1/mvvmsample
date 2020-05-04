@@ -11,7 +11,7 @@ import com.wunderfleet.feat_domain_repo_list.model.GithubRepoModel
 import com.wunderfleet.feat_domain_repo_list.usecase.GetAllReposUsecase
 import javax.inject.Inject
 
-class LoadReposViewModel @Inject constructor(private val getAllReposUsecase: GetAllReposUsecase) :
+open class LoadReposViewModel @Inject constructor(private val getAllReposUsecase: GetAllReposUsecase) :
     ViewModel() {
     private val _getReposLiveData = MutableLiveData<Resource<List<GithubRepoModel>>>()
     val getReposLiveData: LiveData<Resource<List<GithubRepoModel>>>
