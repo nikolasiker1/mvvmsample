@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29
@@ -15,6 +15,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -24,27 +25,10 @@ android {
         }
     }
 
-    viewBinding {
-        enabled = true
-    }
-
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    androidExtensions {
-        experimental = true
-    }
 }
 
 dependencies {
-    implementation project(':core')
-    implementation project(':domain:domain_sampleapp')
+    implementation project(':lib_core')
 
     kapt deps.dagger2.daggerCompiler
 

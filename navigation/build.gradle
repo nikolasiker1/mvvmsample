@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    implementation project(':core')
+    implementation project(':lib_core')
 
 
 }

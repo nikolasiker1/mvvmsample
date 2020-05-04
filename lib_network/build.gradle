@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'realm-android'
+
 
 android {
     compileSdkVersion 29
@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation project(':core')
+    implementation project(':lib_core')
 
     kapt deps.dagger2.daggerCompiler
 
@@ -45,4 +45,5 @@ dependencies {
     testImplementation 'org.mockito:mockito-android:2.7.22'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+
 }

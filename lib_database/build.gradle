@@ -29,8 +29,8 @@ android {
 }
 
 dependencies {
-    implementation project(':core')
-    implementation project(':domain:domain_sampleapp')
+    implementation project(':lib_core')
+    implementation project(':domain:feature_domain_user_profile')
 
     kapt deps.dagger2.daggerCompiler
 

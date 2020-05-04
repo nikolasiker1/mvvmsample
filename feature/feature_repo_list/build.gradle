@@ -25,14 +25,30 @@ android {
         }
     }
 
+    viewBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
 }
 
 dependencies {
-    implementation project(':core')
-    implementation project(':network')
-    implementation project(':lib_database')
-    implementation project(':domain:feat_domain_repo_list')
+    implementation project(':lib_core')
+    implementation project(':domain:feature_domain_repo_list')
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt deps.dagger2.daggerCompiler
 
     kaptAndroidTest deps.dagger2.daggerCompiler
