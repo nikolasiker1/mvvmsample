@@ -1,0 +1,92 @@
+def coveredProject = subprojects.toList()
+def list = coveredProject[3..coveredProject.size() - 1]
+
+apply plugin: 'jacoco'
+
+configure(list) { prj ->
+    apply plugin: 'jacoco'
+
+    println coveredProject
+
+    println list
+
+    jacoco {
+        toolVersion = "0.8.5"
+    }
+
+    task jacocoReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+        group = 'Reporting'
+        description = 'Generate Jacoco coverage'
+
+        println prj.name
+
+        reports {
+            csv.enabled = true
+            xml.enabled = false
+            html.enabled = true
+        }
+
+        final fileFilter = [
+                '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', 'android/**/*.*',
+                '**/pokedroid/data/fragment/*.*', '**/pokedroid/data/type/*.*', '**/*Query.*', '**/*Query$*.*',
+                '**/*_Provide*/**',
+                '**/*_Factory*/**',
+                '**/*_MembersInjector.class',
+                '**/*Dagger*',
+                '**/*di*/**',
+                '**/*Realm*Module*/**',
+                '**/*Model*Creator*/**',
+                'io.realm.*RealmProxy.class'
+        ]
+        final kotlinTree = fileTree(dir: "${prj.buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
+        final javacTree = fileTree(dir: "${prj.buildDir}/intermediates/javac/debug", excludes: fileFilter)
+        final mainSrc = "${prj.projectDir}/src/main/java"
+
+        sourceDirectories.setFrom files([mainSrc])
+        classDirectories.setFrom files([kotlinTree, javacTree])
+        executionData.setFrom fileTree(dir: prj.buildDir, includes: [
+                'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+        ])
+    }
+}
+
+/**
+ *  Root task that generates an aggregated Jacoco test coverage report for all sub-projects
+ */
+task jacocoFullReport(type: JacocoReport, group: 'Coverage reports') {
+    group = 'Reporting'
+    description = 'Generates an aggregate report from all subprojects'
+
+    tasks.withType(Test) {
+        ignoreFailures true
+    }
+
+    def projects = list
+
+    //noinspection GrUnresolvedAccess
+    dependsOn(projects.jacocoReport)
+
+    final source = files(projects.jacocoReport.sourceDirectories)
+
+    additionalSourceDirs.setFrom source
+    sourceDirectories.setFrom source
+
+    classDirectories.setFrom files(projects.jacocoReport.classDirectories)
+    executionData.setFrom files(projects.jacocoReport.executionData)
+
+    reports {
+        html {
+            enabled true
+            destination file('build/reports/jacoco/html')
+        }
+        csv {
+            enabled true
+            destination file('build/reports/jacoco/jacocoFullReport.csv')
+        }
+    }
+
+    doFirst {
+        //noinspection GroovyAssignabilityCheck
+        executionData.setFrom files(executionData.findAll { it.exists() })
+    }
+}

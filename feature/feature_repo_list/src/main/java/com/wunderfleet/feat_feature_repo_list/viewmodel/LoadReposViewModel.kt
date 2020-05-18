@@ -51,7 +51,7 @@ open class LoadReposViewModel @Inject constructor(private val getAllReposUsecase
         const val CONNECTION_ERROR = "connection_error"
     }
 
-    override fun onCleared() {
+    public override fun onCleared() {
         super.onCleared()
         getAllReposUsecase.clear()
     }

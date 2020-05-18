@@ -1,7 +1,6 @@
 rootProject.name = 'Fleet Sample'
 include ':sampleapp'
 include ':lib_core'
-include ':navigation'
 include ':domain:feature_domain_user_profile'
 include ':data:feature_data_user_profile'
 include ':feature:feature_user_profile'

@@ -1,3 +1,0 @@
-package com.wunderfleet.feature_sampleapp
-
-class UseCaseUnitTest

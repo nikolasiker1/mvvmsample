@@ -22,7 +22,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import java.net.ConnectException
 import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.util.concurrent.Callable
 
 
@@ -56,10 +58,7 @@ class ViewModelUnitTest {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { h: Callable<Scheduler?>? -> Schedulers.trampoline() }
         RxJavaPlugins.setIoSchedulerHandler { h: Scheduler? -> Schedulers.trampoline() }
         githubUserModel.name = "Nikola"
-        doReturn(Single.just(githubUserModel)).`when`(userRepository).getUser("nikolasiker1")
-        doReturn(Single.error<SocketTimeoutException>(SocketTimeoutException())).`when`(
-            userRepository
-        ).getUser("error")
+
         whenever(schedulerProvider.getIoThread()).thenReturn(Schedulers.trampoline())
         whenever(schedulerProvider.getMainThread()).thenReturn(Schedulers.trampoline())
         getUsersUsecase = GetUserUsecase(userRepository, schedulerProvider)
@@ -77,6 +76,8 @@ class ViewModelUnitTest {
 
     @Test
     fun `succes usercase result`() {
+        doReturn(Single.just(githubUserModel)).`when`(userRepository).getUser("nikolasiker1")
+
         loadUserViewModel.getUserData("nikolasiker1")
 
 
@@ -92,11 +93,62 @@ class ViewModelUnitTest {
 
     @Test
     fun `error usercase result`() {
+        doReturn(Single.error<SocketTimeoutException>(SocketTimeoutException())).`when`(
+            userRepository
+        ).getUser("error")
         loadUserViewModel.getUserData("error")
 
 
         verify(userRepository).getUser("error")
         assertEquals(loadUserViewModel.getUserLiveData.value?.state, Resource.STATE.ERROR)
         assertEquals(loadUserViewModel.getUserLiveData.value?.message, "connection_error")
+    }
+
+
+    @Test
+    fun `unknown host error usercase result`() {
+        doReturn(Single.error<UnknownHostException>(UnknownHostException())).`when`(
+            userRepository
+        ).getUser("hosterror")
+
+        loadUserViewModel.getUserData("hosterror")
+
+
+        verify(userRepository).getUser("hosterror")
+        assertEquals(loadUserViewModel.getUserLiveData.value?.state, Resource.STATE.ERROR)
+        assertEquals(loadUserViewModel.getUserLiveData.value?.message, "connection_error")
+    }
+
+    @Test
+    fun `connection error usercase result`() {
+        doReturn(Single.error<ConnectException>(ConnectException())).`when`(
+            userRepository
+        ).getUser("connectionerror")
+
+        loadUserViewModel.getUserData("connectionerror")
+
+
+        verify(userRepository).getUser("connectionerror")
+        assertEquals(loadUserViewModel.getUserLiveData.value?.state, Resource.STATE.ERROR)
+        assertEquals(loadUserViewModel.getUserLiveData.value?.message, "connection_error")
+    }
+
+    @Test
+    fun `unknown error usercase result`() {
+        doReturn(Single.error<Exception>(Exception())).`when`(
+            userRepository
+        ).getUser("unknownerror")
+
+        loadUserViewModel.getUserData("unknownerror")
+
+
+        verify(userRepository).getUser("unknownerror")
+        assertEquals(loadUserViewModel.getUserLiveData.value?.state, Resource.STATE.ERROR)
+        assertEquals(loadUserViewModel.getUserLiveData.value?.message, null)
+    }
+
+    @Test
+    fun `oncleared`() {
+        loadUserViewModel.onCleared()
     }
 }

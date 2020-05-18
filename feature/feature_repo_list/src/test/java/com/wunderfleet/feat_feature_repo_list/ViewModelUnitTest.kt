@@ -22,7 +22,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import java.net.ConnectException
 import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.util.concurrent.Callable
 
 /**
@@ -33,7 +35,7 @@ import java.util.concurrent.Callable
 class ViewModelUnitTest {
 
     @Mock
-    lateinit var repoRepository: GithubRepoRepository
+    lateinit var userRepository: GithubRepoRepository
 
     @Mock
     lateinit var schedulerProvider: SchedulerProvider
@@ -42,11 +44,11 @@ class ViewModelUnitTest {
     @JvmField
     val rule = InstantTaskExecutorRule()
 
-    private lateinit var getAllReposUsecase: GetAllReposUsecase
+    private lateinit var getReposUsecase: GetAllReposUsecase
 
     lateinit var loadReposViewModel: LoadReposViewModel
 
-    private val githubRrepoModel: GithubRepoModel = GithubRepoModel()
+    private val githubRepoModel: GithubRepoModel = GithubRepoModel()
 
 
     @Before
@@ -54,36 +56,34 @@ class ViewModelUnitTest {
         MockitoAnnotations.initMocks(this)
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { h: Callable<Scheduler?>? -> Schedulers.trampoline() }
         RxJavaPlugins.setIoSchedulerHandler { h: Scheduler? -> Schedulers.trampoline() }
-        githubRrepoModel.name = "test"
-        doReturn(Single.just(mutableListOf(githubRrepoModel))).`when`(repoRepository)
-            .getAllRepos("nikolasiker1")
-        doReturn(Single.error<SocketTimeoutException>(SocketTimeoutException())).`when`(
-            repoRepository
-        ).getAllRepos("error")
+        githubRepoModel.name = "Nikola"
         whenever(schedulerProvider.getIoThread()).thenReturn(Schedulers.trampoline())
         whenever(schedulerProvider.getMainThread()).thenReturn(Schedulers.trampoline())
-        getAllReposUsecase = GetAllReposUsecase(repoRepository, schedulerProvider)
-        loadReposViewModel = LoadReposViewModel(getAllReposUsecase)
+        getReposUsecase = GetAllReposUsecase(userRepository, schedulerProvider)
+        loadReposViewModel = LoadReposViewModel(getReposUsecase)
     }
 
     @Test
     fun `null checks`() {
-        assertNotNull(githubRrepoModel)
-        assertNotNull(repoRepository)
+        assertNotNull(githubRepoModel)
+        assertNotNull(userRepository)
         assertNotNull(schedulerProvider)
-        assertNotNull(getAllReposUsecase)
+        assertNotNull(getReposUsecase)
         assertNotNull(loadReposViewModel)
     }
 
     @Test
     fun `succes usercase result`() {
+        doReturn(Single.just(listOf(githubRepoModel))).`when`(userRepository)
+            .getAllRepos("nikolasiker1")
+
         loadReposViewModel.getReposLiveData("nikolasiker1")
 
 
-        verify(repoRepository).getAllRepos("nikolasiker1")
-        assertEquals(getAllReposUsecase.username, "nikolasiker1")
+        verify(userRepository).getAllRepos("nikolasiker1")
+        assertEquals(getReposUsecase.username, "nikolasiker1")
         assertEquals(
-            loadReposViewModel.getReposLiveData.value?.data?.get(0)?.name, githubRrepoModel.name
+            loadReposViewModel.getReposLiveData.value?.data?.get(0)?.name, githubRepoModel.name
         )
         assertEquals(
             loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.SUCCESS
@@ -92,11 +92,63 @@ class ViewModelUnitTest {
 
     @Test
     fun `error usercase result`() {
+        doReturn(Single.error<SocketTimeoutException>(SocketTimeoutException())).`when`(
+            userRepository
+        ).getAllRepos("error")
+
         loadReposViewModel.getReposLiveData("error")
 
 
-        verify(repoRepository).getAllRepos("error")
+        verify(userRepository).getAllRepos("error")
         assertEquals(loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.ERROR)
         assertEquals(loadReposViewModel.getReposLiveData.value?.message, "connection_error")
+    }
+
+
+    @Test
+    fun `unknown host error usercase result`() {
+        doReturn(Single.error<UnknownHostException>(UnknownHostException())).`when`(
+            userRepository
+        ).getAllRepos("hosterror")
+
+        loadReposViewModel.getReposLiveData("hosterror")
+
+
+        verify(userRepository).getAllRepos("hosterror")
+        assertEquals(loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.ERROR)
+        assertEquals(loadReposViewModel.getReposLiveData.value?.message, "connection_error")
+    }
+
+    @Test
+    fun `connection error usercase result`() {
+        doReturn(Single.error<ConnectException>(ConnectException())).`when`(
+            userRepository
+        ).getAllRepos("connectionerror")
+
+        loadReposViewModel.getReposLiveData("connectionerror")
+
+
+        verify(userRepository).getAllRepos("connectionerror")
+        assertEquals(loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.ERROR)
+        assertEquals(loadReposViewModel.getReposLiveData.value?.message, "connection_error")
+    }
+
+    @Test
+    fun `unknown error usercase result`() {
+        doReturn(Single.error<Exception>(Exception())).`when`(
+            userRepository
+        ).getAllRepos("unknownerror")
+
+        loadReposViewModel.getReposLiveData("unknownerror")
+
+
+        verify(userRepository).getAllRepos("unknownerror")
+        assertEquals(loadReposViewModel.getReposLiveData.value?.state, Resource.STATE.ERROR)
+        assertEquals(loadReposViewModel.getReposLiveData.value?.message, null)
+    }
+
+    @Test
+    fun `oncleared`() {
+        loadReposViewModel.onCleared()
     }
 }

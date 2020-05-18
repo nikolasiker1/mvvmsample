@@ -6,7 +6,7 @@ import com.wunderfleet.feat_domain_repo_list.repository.GithubRepoRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-class GithubReposRepositoryImpl @Inject constructor(
+open class GithubReposRepositoryImpl @Inject constructor(
     private val remoteDataSource: ReposRemoteDataSource,
     private val localDataSource: ReposLocalDataSource,
     private val schedulerProvider: SchedulerProvider

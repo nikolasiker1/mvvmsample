@@ -53,7 +53,7 @@ open class LoadUserViewModel @Inject constructor(private val getUserUsecase: Get
         const val CONNECTION_ERROR = "connection_error"
     }
 
-    override fun onCleared() {
+    public override fun onCleared() {
         super.onCleared()
         getUserUsecase.clear()
     }

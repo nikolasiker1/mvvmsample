@@ -6,6 +6,8 @@ import com.wunderfleet.feat_feature_repo_list.ui.LoadingFragment
 import com.wunderfleet.feat_feature_repo_list.viewmodel.LoadReposViewModel
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito.any
 import org.mockito.Mockito.mock
 
 @RunWith(AndroidJUnit4::class)
